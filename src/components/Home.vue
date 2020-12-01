@@ -90,6 +90,7 @@ export default {
         145: 'iconfont icon-baobiao'
       },
       isCollapse: false,
+      //激活高亮的地址
       ativePath: ''
     }
   },

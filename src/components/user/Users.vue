@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/users' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card class="box-card">
       <!-- 搜索与添加区域 -->
@@ -92,6 +92,7 @@
                 type="warning"
                 icon="el-icon-setting"
                 size="mini"
+                @click="setRole(scope.row)"
               ></el-button>
             </el-tooltip>
           </template>
@@ -187,6 +188,40 @@
           <el-button
             type="primary"
             @click="editUser"
+          >确 定</el-button>
+        </span>
+      </el-dialog>
+      <!-- 分配角色对话框 -->
+      <el-dialog
+        title="分配角色"
+        :visible.sync="setRoleDialogVisible"
+        width="50%"
+      >
+        <div>
+          <p>当前的用户：{{userInfo.username}}</p>
+          <p>当前的角色：{{userInfo.role_name}}</p>
+          <p>分配新角色:
+            <el-select
+              v-model="selectedRoleId"
+              placeholder="请选择"
+            >
+              <el-option
+                v-for="item in rolesList"
+                :key="item.id"
+                :label="item.roleName"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+          </p>
+        </div>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+          <el-button @click="setRoleDialogVisible = false">取 消</el-button>
+          <el-button
+            type="primary"
+            @click="saveRoleInfo"
           >确 定</el-button>
         </span>
       </el-dialog>
@@ -301,8 +336,15 @@ export default {
             trigger: 'blur'
           }
         ]
-      }
+      },
+      //获取当前行的角色数据
+      userInfo: '',
+      //不显示分配角色对话框
+      setRoleDialogVisible: false,
+      selectedRoleId: '',
+      rolesList: []
     }
+
 
   },
   created () {
@@ -322,7 +364,7 @@ export default {
     },
     handleSizeChange (newSize) {
       //当pagesize改变触发，当pagesize发生改变的时候，我们应该以最新的pagesize啦i请求数据病展示数据
-      console.log(newSize);
+      // console.log(newSize);
       this.queryInfo.pagesize = newSize
       //重新按照pagesize发送请求，请求最新的数据
       this.getUserList()
@@ -339,7 +381,7 @@ export default {
       const { data: res } = await this.$http.put(`users/${row.id}/state/${row.mg_state}`)
       //如果返回的状态为异常状态则报错并返回
       if (res.meta.status !== 200) {
-        // 将状态值取反
+        // 将状态值取反 
         row.mg_state = !row.mg_state
         //并提示信息
         return this.$message.error('修改状态失败')
@@ -416,7 +458,7 @@ export default {
       }).catch(err => err)
       // console.log(confirmResult);
       //如果用户点击确认,则confirmResult打印结果为confirm
-      if (confirmResult !== 'confirm') return this.$message.error('已取消删除') //当confirmResult不等于字符串confirm时,提示用户取消
+      if (confirmResult !== 'confirm') return this.$message.info('已取消删除') //当confirmResult不等于字符串confirm时,提示用户取消
       //点击确认,发送delete请求
       const { data: res } = await this.$http.delete('users/' + id)
       //判读状态码是否异常,提示用户删除失败
@@ -430,6 +472,34 @@ export default {
       }
       //并且重新调用获取用户信息数据函数
       this.getUserList()
+    },
+    //分配角色
+    async setRole (userInfo) {
+      //
+      this.userInfo = userInfo
+      //展示对话框之前，获取所有的角色列表
+      const { data: res } = await this.$http.get('roles')
+      //如果获取失败
+      if (res.meta.status !== 200) return this.$message.error('获取角色失败')
+      //成功就保存数据
+      this.rolesList = res.data
+      //显示张开对话框
+      this.setRoleDialogVisible = true
+
+    },
+    //点击按钮，分配角色
+    async saveRoleInfo () {
+      //没有选中角色
+      if (!this.selectedRoleId) return this.$message.error('请选择要分配的角色')
+      const { data: res } = await this.$http.put(`users/${this.userInfo.id}/role`, { rid: this.selectedRoleId })
+      if (res.meta.status !== 200) {
+        return this.$message.error('更新用户角色失败')
+      }
+      this.$message.success('更新用户角色成功')
+      // 更新用户信息列表
+      this.getUserList()
+      //关闭对话框
+      this.setRoleDialogVisible = false
     }
   }
 }
