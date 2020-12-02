@@ -17,10 +17,6 @@
         <el-table-column type="index"></el-table-column>
         <el-table-column
           label="权限名称"
-          prop=""
-        ></el-table-column>
-        <el-table-column
-          label="权限名称"
           prop="authName"
         ></el-table-column>
         <el-table-column

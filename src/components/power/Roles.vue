@@ -111,74 +111,75 @@
           </template>
         </el-table-column>
       </el-table>
-      <!-- 添加角色对话框 -->
-      <el-dialog
-        title="添加角色"
-        :visible.sync="addRoledialogVisible"
-        width="30%"
-        @close="addRolehandleClose"
-      >
-        <el-form
-          :model="addRoleForm"
-          :rules="addRoleFormRules"
-          ref="addFormRef"
-          label-width="70px"
-        >
-          <el-form-item
-            label="角色名称"
-            prop="roleName"
-          >
-            <el-input v-model="addRoleForm.roleName"></el-input>
-          </el-form-item>
-          <el-form-item
-            label="角色描述"
-            prop="roleDesc"
-          >
-            <el-input v-model="addRoleForm.roleDesc"></el-input>
-          </el-form-item>
-        </el-form>
-        <!-- 添加角色对话框底部 -->
-        <span
-          slot="footer"
-          class="dialog-footer"
-        >
-          <el-button @click="addRoledialogVisible= false">取 消</el-button>
-          <el-button
-            type="primary"
-            @click="addRoledialogVisible = false"
-          >确 定</el-button>
-        </span>
-      </el-dialog>
-      <!-- 分配角色对话框 -->
-      <el-dialog
-        title="提示"
-        :visible.sync="setRightDialogVisible"
-        width="50%"
-        @close="setRightDialogClose"
-      >
-        <!-- 树形结构 data代表数据绑定 props是指定树形结构的文本是以什么属性绑定的，或者说通过那个属性来实现父子间的嵌套 default-expand-all为true展开所有节点-->
-        <el-tree
-          :data="rightList"
-          :props="treeProps"
-          show-checkbox
-          node-key="id"
-          default-expand-all
-          :default-checked-keys="defKeys"
-          ref="treeRef"
-        ></el-tree>
-
-        <span
-          slot="footer"
-          class="dialog-footer"
-        >
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button
-            type="primary"
-            @click="allotRights"
-          >确 定</el-button>
-        </span>
-      </el-dialog>
     </el-card>
+    <!-- 添加角色对话框 -->
+    <el-dialog
+      title="添加角色"
+      :visible.sync="addRoledialogVisible"
+      width="50%"
+      @close="addRolehandleClose"
+    >
+      <el-form
+        :model="addRoleForm"
+        :rules="addRoleFormRules"
+        ref="addFormRef"
+        label-width="100px"
+      >
+        <el-form-item
+          label="角色名称"
+          prop="roleName"
+        >
+          <el-input v-model="addRoleForm.roleName"></el-input>
+        </el-form-item>
+        <el-form-item
+          label="角色描述"
+          prop="roleDesc"
+        >
+          <el-input v-model="addRoleForm.roleDesc"></el-input>
+        </el-form-item>
+      </el-form>
+      <!-- 添加角色对话框底部 -->
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button @click="addRoledialogVisible= false">取 消</el-button>
+        <el-button
+          type="primary"
+          @click="addRoledialogVisible = false"
+        >确 定</el-button>
+      </span>
+    </el-dialog>
+    <!-- 分配角色对话框 -->
+    <el-dialog
+      title="提示"
+      :visible.sync="setRightDialogVisible"
+      width="50%"
+      @close="setRightDialogClose"
+    >
+      <!-- 树形结构 data代表数据绑定 props是指定树形结构的文本是以什么属性绑定的，或者说通过那个属性来实现父子间的嵌套 default-expand-all为true展开所有节点-->
+      <el-tree
+        :data="rightList"
+        :props="treeProps"
+        show-checkbox
+        node-key="id"
+        default-expand-all
+        :default-checked-keys="defKeys"
+        ref="treeRef"
+      ></el-tree>
+
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button
+          type="primary"
+          @click="allotRights"
+        >确 定</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -222,7 +223,7 @@ export default {
       //设置树形控件中默认选中的内容
       defKeys: [],
       //保存角色的id
-      rolesId: ''
+      rolesId: '',
 
     }
   },
@@ -307,6 +308,10 @@ export default {
       this.getRoleList();
       //关闭对话框
       this.setRightDialogVisible = false;
+
+    },
+    //点击编辑按钮时触发的函数
+    showeditDialogVisible (cateId) {
 
     }
   }
