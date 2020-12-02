@@ -6,3 +6,4 @@
 [1128/200332.618:ERROR:directory_reader_win.cc(43)] FindFirstFile: 系统找不到指定的路径。 (0x3)
 [1130/101525.260:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Hasee\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\8ac0b17c-6e66-4d80-8b70-8176405e2da8: 系统找不到指定的路径。 (0x3)
 [1130/101525.263:ERROR:directory_reader_win.cc(43)] FindFirstFile: 系统找不到指定的路径。 (0x3)
+[1201/085541.016:ERROR:directory_reader_win.cc(43)] FindFirstFile: 系统找不到指定的路径。 (0x3)
