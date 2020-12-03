@@ -368,7 +368,7 @@ export default {
       res.data.forEach(item => {
         //判断item.attr_vals是否为空,如果不为空,就以空格进行分割,否则就返回空数组
         item.attr_vals = item.attr_vals ? item.attr_vals.split(' ') : []
-        //控制文本框的显示与隐藏
+        //控制文本框的隐藏
         item.inputVisible = false
         //文本框输入的值
         item.inputValue = ''
