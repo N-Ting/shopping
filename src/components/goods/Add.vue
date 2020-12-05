@@ -341,7 +341,7 @@ export default {
       const filePath = file.response.data.tmp_path
       //从pics数组找到这个图片对应的索引值
       const index = this.addForm.pics.findIndex(item => item.pic === filePath)
-      //调用数组的splice方法，把图片信息对象从pics数组删除
+      //调用数组的splice方法，把图片信息对象从pics数组中删除
       this.addForm.pics.splice(index, 1)
       // console.log(this.addForm);
     },

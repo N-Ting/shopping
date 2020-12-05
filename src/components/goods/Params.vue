@@ -392,7 +392,7 @@ export default {
         //数据合法发送post请求
         const { data: res } = await this.$http.post(`categories/${this.cateId}/attributes`, {
           attr_name: this.addForm.attr_name,
-          attr_sel: this.activeName
+          attr_sel: this.activeName,
         })
         //如果发送请求失败
         if (res.meta.status !== 201) return this.$message.error('添加参数失败')
@@ -438,7 +438,8 @@ export default {
         //数据合法,则发送put请求
         const { data: res } = await this.$http.put(`categories/${this.cateId}/attributes/${this.editForm.attr_id}`, {
           attr_name: this.editForm.attr_name,
-          attr_sel: this.activeName
+          attr_sel: this.activeName,
+          attr_vals: this.editForm.attr_vals
         })
         //如果请求失败
         if (res.meta.status !== 200) return this.$message.error('修改参数失败')
