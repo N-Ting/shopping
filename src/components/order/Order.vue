@@ -142,8 +142,14 @@
       width="50%"
     >
       <el-timeline>
-        <el-timeline-item>
-
+        <el-timeline-item
+          v-for="(activity,index)
+          in
+          progressInfo"
+          :key="index"
+          :timestamp="activity.time"
+        >
+          {{activity.context}}
         </el-timeline-item>
       </el-timeline>
     </el-dialog>
@@ -192,6 +198,7 @@ export default {
       },
       //不显示物流对话框
       progressVisible: false,
+      progressInfo: []
 
     }
   },
@@ -232,9 +239,11 @@ export default {
     //点击物流按钮时触发的事件
     async showProgressBox () {
       //发送请求,获取物流数据
-      //   const { data: res } = await this.$http.get('kuaidi/804909574412544580')
-      //   //请求失败
-      //   if (res.meta.status !== 200) return this.$message.error('获取物流进度失败!')
+      const { data: res } = await this.$http.get('kuaidi/DPK210206915703')
+      //请求失败
+      if (res.meta.status !== 200) return this.$message.error('获取物流进度失败!')
+      //将获取到数据保存下来
+      this.progressInfo = res.data
       //显示物流进度对话框
       this.progressVisible = true
     }

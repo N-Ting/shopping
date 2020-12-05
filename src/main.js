@@ -18,6 +18,12 @@ import 'quill/dist/quill.snow.css' // for snow theme
 import 'quill/dist/quill.bubble.css' // for bubble theme
 
 
+//导入echarts
+import echarts from 'echarts'
+
+Vue.prototype.$echarts = echarts
+
+
 
 // 初始化全局url
 axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
